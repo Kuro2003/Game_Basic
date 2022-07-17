@@ -1,6 +1,5 @@
 import pygame
 from pygame.sprite import Sprite
-from settings import Settings
 class Alien(Sprite):
     """ A class to represent a single alien in the feet """
     def __init__(self,ai_game):
@@ -17,7 +16,7 @@ class Alien(Sprite):
 
         # Store the alien's exact horizontal position
         self.x = float(self.rect.x)
-        self.settings = Settings()
+        self.settings = ai_game.settings
     
     def check_edges(self):
         """ Return True if alien is at the adge of screen. """
@@ -27,5 +26,5 @@ class Alien(Sprite):
     
     def update(self):
         """ Move the alien to the right or left """
-        self.x += self.settings.alien_speed * self.settings.fleet_direction
+        self.x += (self.settings.alien_speed * self.settings.fleet_direction)
         self.rect.x = self.x
