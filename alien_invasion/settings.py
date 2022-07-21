@@ -22,7 +22,7 @@ class Settings:
 
         # Ship settings
         self.ship_speed = 1.5
-        self.ship_limit = 1
+        self.ship_limit = 2
 
         # How quickly the game speeds up
         self.speedup_scale = 1.1
