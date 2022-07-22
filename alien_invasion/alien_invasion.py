@@ -167,7 +167,7 @@ class AlienInvasion:
         # Determine the number of rows of aliens that fit on the screen.
         ship_height = self.ship.rect.height
         available_space_y = self.settings.screen_height - (3 * alien_height) - ship_height
-        number_rows = available_space_y // (2 * alien_height)
+        number_rows = available_space_y // (2 * alien_height) - 1
 
         # Create the full fleet of aliens
         for row_number in range(number_rows):
@@ -181,7 +181,7 @@ class AlienInvasion:
         alien.x = alien_width + 2 * alien_width * alien_number
         alien.rect.x = alien.x
 
-        alien.rect.y = alien.rect.height + 2 * alien.rect.height * row_number 
+        alien.rect.y = alien.rect.height + 2 * alien.rect.height * row_number + 100
         self.aliens.add(alien)
     
     def _update_aliens(self):
