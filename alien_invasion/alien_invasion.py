@@ -154,6 +154,18 @@ class AlienInvasion:
             self.stats.level += 1
             self.sb.prep_level()
 
+    def get_number_aliens_x(self,alien_width):
+        available_space_x = self.settings.screen_width - (2 * alien_width)
+        number_aliens_x = available_space_x // (2 * alien_width)
+        return number_aliens_x
+
+    def get_number_rows(self,alien_height):
+        # Determine the number of rows of aliens that fit on the screen.
+        ship_height = self.ship.rect.height
+        available_space_y = self.settings.screen_height - (3 * alien_height) - ship_height
+        number_rows = available_space_y // (2 * alien_height) - 1
+        return number_rows 
+
     def _create_fleet(self):
         """ Create the fleet of aliens """
         # Create an alien and find the number of aliens in a row
@@ -161,13 +173,9 @@ class AlienInvasion:
 
         alien = Alien(self)
         alien_width, alien_height = alien.rect.size
-        available_space_x = self.settings.screen_width - (2 * alien_width)
-        number_aliens_x = available_space_x // (2 * alien_width) 
-
-        # Determine the number of rows of aliens that fit on the screen.
-        ship_height = self.ship.rect.height
-        available_space_y = self.settings.screen_height - (3 * alien_height) - ship_height
-        number_rows = available_space_y // (2 * alien_height) - 1
+        
+        number_aliens_x = self.get_number_aliens_x(alien_width)
+        number_rows = self.get_number_rows(alien_height)
 
         # Create the full fleet of aliens
         for row_number in range(number_rows):
