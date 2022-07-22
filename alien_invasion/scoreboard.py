@@ -44,6 +44,15 @@ class Scoreboard:
         self.high_score_rect = self.high_score_image.get_rect()
         self.high_score_rect.centerx = self.screen_rect.centerx
         self.high_score_rect.top = self.score_rect.top
+    
+    def load_high_score(self):
+        filename = 'highscore.txt'
+        try:
+            with open(filename) as file_object:
+                score = file_object.read()
+                self.stats.high_score = int(score)
+        except FileNotFoundError:
+            pass
 
     def check_high_score(self):
         """ Check to see if there's a new high score. """

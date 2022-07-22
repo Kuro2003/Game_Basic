@@ -17,6 +17,7 @@ class AlienInvasion:
 
         # Initialize the game, and create game resources.
         pygame.init()
+        self.clock = pygame.time.Clock()
         pygame.display.set_caption("Alien Invasion")  
         self.settings = Settings() 
         self.screen = pygame.display.set_mode((self.settings.screen_width,self.settings.screen_height))
@@ -39,18 +40,27 @@ class AlienInvasion:
     def run_game(self):
     # Start the main loop for the game
         while True:
+            self.clock.tick(120)
             self._check_events()
             if self.stats.game_active == True:
                 self.ship.update()
                 self._update_bullets()
                 self._update_aliens()
-                self._update_screen()
+            # Draw the play button if the game is inactive
+            if not self.stats.game_active:
+                # self._update_screen()
+                self.play_button.draw_button()
 
+            self._update_screen()
             pygame.display.flip()
+
     def _check_events(self):
         # respond to keypress and mouse events.
         for event in pygame.event.get():
                 if event.type == pygame.QUIT:
+                    filename = 'highscore.txt'
+                    with open(filename, 'w') as file_object:
+                        file_object.write(str(self.stats.high_score))
                     sys.exit()
                 elif event.type == pygame.KEYDOWN:
                     self._check_keydown_events(event)
@@ -95,6 +105,9 @@ class AlienInvasion:
         elif event.key == pygame.K_LEFT:
             self.ship.moving_left = False
         elif event.key == pygame.K_q:
+            filename = 'highscore.txt'
+            with open(filename, 'w') as file_object:
+                file_object.write(str(self.stats.high_score))
             sys.exit()
         elif event.key == pygame.K_SPACE:
             self._fire_bullet()
@@ -110,6 +123,7 @@ class AlienInvasion:
         self.aliens.draw(self.screen)
         # Draw the score information.
         self.sb.show_score()
+
         # Draw the play button if the game is inactive
         if not self.stats.game_active:
             self.play_button.draw_button()
